@@ -28,6 +28,10 @@ jobs:
       - name: Run tests with Gradle
         run: ./gradlew test
 
+      - name: Run SpotBugs
+        if: always()
+        run: ./gradlew spotbugsMain
+
       - name: Upload Test Reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -35,6 +39,14 @@ jobs:
           name: test-reports
           path: |
             build/reports/tests/test/
+    
+      - name: Upload SpotBugs Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotbugs-reports
+          path: |
+            build/reports/spotbugs/
 
       - name: Upload Coverage with JaCoCo
         if: always()

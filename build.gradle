@@ -1,7 +1,8 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'io.qameta.allure' version "2.12.0"
+    id 'io.qameta.allure' version '2.12.0'
+    id 'com.github.spotbugs' version '5.0.14'
 }
 
 group = 'org.usvm'
@@ -9,6 +10,10 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+spotbugs {
+    toolVersion = '4.7.2'
 }
 
 dependencies {
@@ -50,5 +55,12 @@ allure {
                 enabled = true
             }
         }
+    }
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        xml.enabled = true
+        html.enabled = true
     }
 }
