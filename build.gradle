@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'io.qameta.allure' version "2.12.0"
 }
 
 group = 'org.usvm'
@@ -21,12 +22,12 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:5.5.1")
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation("org.mockito:mockito-core:5.15.2")
-
+    testImplementation("io.qameta.allure:allure-junit5:2.24.0")
 }
 
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport // report is always generated after tests run
+    finalizedBy jacocoTestReport, allureReport
 }
 
 jacocoTestReport {
@@ -39,4 +40,15 @@ jacocoTestReport {
 
 jacoco {
     toolVersion = "0.8.11"
+}
+
+allure {
+    version = '2.24.0'
+    adapter {
+        frameworks {
+            junit5 {
+                enabled = true
+            }
+        }
+    }
 }
